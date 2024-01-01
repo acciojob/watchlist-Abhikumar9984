@@ -31,26 +31,27 @@ public class MovieController {
     }
 
     @PutMapping("/add-movie-director-pair")
-    public ResponseEntity<String> addPair(@RequestParam String director , @RequestParam String movie){
-        repo.addMovieDirectorPair(director , movie);
+    public ResponseEntity<String> addPair(@RequestParam String MovieName , @RequestParam String DirectorName){
+        repo.addMovieDirectorPair(MovieName , DirectorName);
         return new ResponseEntity<>("New movie-director pair added successfully" , HttpStatus.CREATED);
     }
 
     @GetMapping("/get-movie-by-name/{name}")
-    public ResponseEntity<Movie> getMovie(@PathVariable String movieName){
-        Movie movie  = service.getMovie(movieName);
+    public ResponseEntity<Movie> getMovie(@PathVariable String name){
+        Movie movie  = service.getMovie(name);
+        System.out.println(movie);
         return new ResponseEntity<>(movie , HttpStatus.CREATED);
     }
 
     @GetMapping("/get-director-by-name/{name}")
-    public ResponseEntity<Director> getDirector(@PathVariable String directorName){
-        Director director  = service.getDirector(directorName);
+    public ResponseEntity<Director> getDirector(@PathVariable String name){
+        Director director  = service.getDirector(name);
         return new ResponseEntity<>(director , HttpStatus.CREATED);
     }
 
     @GetMapping("/get-movies-by-director-name/{director}")
-    public ResponseEntity<List<Movie>> getMovieByDirectorName(@PathVariable String directorName){
-          List<Movie> ans  = service.getAllMovieByName(directorName);
+    public ResponseEntity<List<Movie>> getMovieByDirectorName(@PathVariable String director){
+          List<Movie> ans  = service.getAllMovieByName(director);
           return new ResponseEntity<>(ans , HttpStatus.CREATED);
     }
 
@@ -61,8 +62,8 @@ public class MovieController {
     }
 
     @DeleteMapping("/delete-director-by-name")
-    public ResponseEntity<String> deleteTheMoviesOfDirector(@RequestParam String directorName){
-        service.deleteAllMoviesOfaParticularDirector(directorName);
+    public ResponseEntity<String> deleteTheMoviesOfDirector(@RequestParam String name){
+        service.deleteAllMoviesOfaParticularDirector(name);
         return new ResponseEntity<>("deleted successfully", HttpStatus.CREATED);
     }
 

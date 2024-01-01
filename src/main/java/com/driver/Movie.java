@@ -8,6 +8,15 @@ public class Movie{
     public Movie() {
     }
 
+    @Override
+    public String toString() {
+        return "Movie{" +
+                "name='" + name + '\'' +
+                ", durationInMinutes=" + durationInMinutes +
+                ", imdbRating=" + imdbRating +
+                '}';
+    }
+
     public Movie(String name , int duration , double rating) {
         this.name = name;
         this.durationInMinutes  = duration;

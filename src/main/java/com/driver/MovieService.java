@@ -13,23 +13,12 @@ public class MovieService {
     private MovieRepository obj1;
 
     public Movie getMovie(String movieName){
-        List<Movie> temp  = obj1.getAllMovie();
-        for(Movie m : temp){
-            if(m.getName().equals(movieName)){
-                return m;
-            }
-        }
-        return null;
+        System.out.println(movieName);
+        return obj1.getMovieByName(movieName);
     }
 
     public Director getDirector(String directorName){
-        List<Director> temp  = obj1.getAllDirector();
-        for(Director d: temp){
-            if(d.getName().equals(directorName)){
-                return d;
-            }
-        }
-        return null;
+        return obj1.getDirectorByName(directorName);
     }
 
     public List<Movie> getAllMovieByName(String directorName){

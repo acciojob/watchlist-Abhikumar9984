@@ -12,7 +12,7 @@ public class MovieRepository {
 
     HashMap<String , Movie> movieDb = new HashMap<>();
     HashMap<String , Director> directorDb = new HashMap<>();
-    HashMap<Director , Movie> pairDb  = new HashMap<>();
+    HashMap<Director , List<Movie>>pairDb  = new HashMap<>();
     public void addMovieToMovieDb(Movie movie){
         movieDb.put(movie.getName() , movie);
     }
@@ -22,9 +22,16 @@ public class MovieRepository {
     }
 
     public void addMovieDirectorPair( String movieName , String directorName){
+        if(pairDb.containsKey(directorDb.get(directorName))){
+            List<Movie> list  = pairDb.get(directorDb.get(directorName));
+            list.add(movieDb.get(movieName));
+            pairDb.put(directorDb.get(directorName) , list);
+        }
         Movie movie  =  movieDb.get(movieName);
         Director director  = directorDb.get(directorName);
-        pairDb.put(director , movie);
+        List<Movie> list  = new ArrayList<>();
+        list.add(movie);
+        pairDb.put(director , list);
     }
 
     public List<Movie> getAllMovie(){
@@ -36,55 +43,26 @@ public class MovieRepository {
     }
 
     public List<Movie> getAllMovieByDirectorName(String name){
-        List<Movie> pans  = new ArrayList<>();
-
-        for(Director d : pairDb.keySet()){
-            if(d.getName().equals(name)){
-                pans.add(pairDb.get(d));
-            }
-        }
-        return pans;
+        return pairDb.get(directorDb.get(name));
     }
 
     public void deleteAllMoviesByDirectorName(String name){
-        List<Movie> temp  = new ArrayList<>();
-        for(Director d : pairDb.keySet()){
-            if(d.getName().equals(name)){
-                temp.add(pairDb.get(d));
-                pairDb.remove(d);
-            }
-        }
-
-        for(Movie m : temp){
-            if(movieDb.containsKey(m.getName())){
-                movieDb.remove(m.getName());
-            }
-        }
-
-        for(String d : directorDb.keySet()){
-            if(d.equals(name))
-            {
-                directorDb.remove(d);
-                break;
-            }
-        }
+       pairDb.remove(directorDb.get(name));
     }
 
     public void deleteAllDirectorAndMovies(){
-        List<Movie> temp  = new ArrayList<>();
+
         for(Director d : pairDb.keySet()){
-                temp.add(pairDb.get(d));
                 pairDb.remove(d);
         }
-
-        for(Movie m : temp){
-            if(movieDb.containsKey(m.getName())){
-                movieDb.remove(m.getName());
-            }
-        }
-
-        for(String d : directorDb.keySet()){
-                directorDb.remove(d);
-        }
     }
+
+    public Movie getMovieByName(String name){
+        return movieDb.get(name);
+    }
+
+    public Director getDirectorByName(String name){
+        return directorDb.get(name);
+    }
+
 }
