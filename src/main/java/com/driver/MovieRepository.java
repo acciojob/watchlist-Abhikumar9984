@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Repository
@@ -35,11 +36,11 @@ public class MovieRepository {
     }
 
     public List<Movie> getAllMovie(){
-        return movieDb.values().stream().toList();
+        return movieDb.values().stream().collect(Collectors.toList());
     }
 
     public List<Director> getAllDirector(){
-        return directorDb.values().stream().toList();
+        return directorDb.values().stream().collect(Collectors.toList());
     }
 
     public List<Movie> getAllMovieByDirectorName(String name){
